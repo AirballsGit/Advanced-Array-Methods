@@ -21,7 +21,8 @@ function power (x,y){
     return x ** y; 
 }
 
-const mathFuncs = [add,subtract,multiply,divide, power];
+const mathFuncs = [add,subtract,multiply,divide, power]; 
+//need to call as mathFunc[0](5,4) >>> calls add with (5,4);
 
 function doMath(a,b, mathFunc){
     return mathFunc(a,b);
