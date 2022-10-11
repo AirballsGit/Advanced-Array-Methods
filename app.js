@@ -1,5 +1,7 @@
 
-// intro to callbacks: 
+//**********************/
+// Section 1: // intro to callbacks: 
+//**********************/
 
 function add (x,y){
     return x + y;   
@@ -27,6 +29,7 @@ const mathFuncs = [add,subtract,multiply,divide, power];
 function doMath(a,b, mathFunc){
     return mathFunc(a,b);
 }
+// accepts 2 parameters a & b and you pass in one of the declared math functions as mathFunc
 
 doMath(3,4, function(a,b){
 console.log(a ** b);
@@ -38,5 +41,6 @@ function doAllMath(a,b, mathFuncs){
     }
 }
 
-// For Each: 
-
+//**********************/
+// Section 2: // For Each: 
+//**********************/
