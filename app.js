@@ -127,3 +127,117 @@ forEach(colors,function(color, i){
 colors.forEach(function(color, i){
     console.log(color.toUpperCase(), 'at index of:', i);
 })
+
+
+//**********************/
+// Section 3: // Map: 
+//**********************/
+
+// creates a new array >> 
+//iterates through an array >> 
+// runs a callback function for each value in the array>>
+// adds the result of that callback function to the new array>>
+//Returns the new array>>
+//Map always returns a new arrau of the same length 
+//doesnt mutate original array
+//have to save map into a varible (i.e doubles to return that new 'mapped' array)
+
+// easy example 1: 
+
+const numbers = [1,2,3];
+const timesTen = numbers.map(function(value){
+    return value * 10;
+});  // numbers = [1,2,3]
+    // timesTen = [10,20,30]
+
+const doubles = numbers.map(function(num){
+    console.log(num * 2); // this will print 2,4, 6 to the console
+                            // BUT IF YOU run numbers in the console it will>>
+                            // return [undefined, undefined, undefined]
+});
+
+//example 2:
+const toDos = [
+    {
+        id: 1,
+        text: 'walk the dog',
+        priority: 'high'
+
+    },
+    {
+        id: 2,
+        text: 'walk the chickens',
+        priority: 'medium'
+
+    },
+    {
+        id: 3,
+        text: 'feed the cats',
+        priority: 'low'
+
+    },
+    {
+        id: 4,
+        text: 'put out the fire in my garage',
+        priority: 'very high'
+
+    },
+];
+
+
+const toDoText = toDos.map(function(todo){
+    return todo.text; // ['walk the dog', 'walk the chickens', 'feed the cats', 'put out the fire in my garage']
+});
+
+
+// example 3: ***** quick way to turn nodelists into arrays to use array methods ****
+
+const links = document.querySelectorAll('a'); // this will return a nodelist so you cant use all array methods
+// we can turn the nodelist into an array using a helper method Array.from ****
+
+const iter = Array.from(links); // *** using the Array.from Here and saving to varible
+
+const ls = iter.map(function(e){  // ** mapping over that iter array to get links
+    return e.href; // ['http://www.google.com/', 'http://www.reddit.com/', 'http://www.yahoo.com/', 'http://www.instagram.com/']
+})
+
+// ABOVE example can be written as: 
+
+const links2 = Array.from(document.querySelectorAll('a'));
+
+const urls = links2.map(function(link){
+    return link.href; // use the attribute array method to return what youre looking for
+                        // >> ['http://www.google.com/', 'http://www.reddit.com/', 'http://www.yahoo.com/', 'http://www.instagram.com/']
+}); 
+
+
+// writing our own Map: 
+
+//example 1:
+
+// function myMap(arr, callback){
+//     const mappedArray = [];
+//     for(let i = 0; i < arr.length; i ++){
+//         mappedArray.push(callback(arr[i]))
+//     }
+//     return mappedArray;
+// }
+
+// const priorityMap = myMap(toDos, function(todo){
+//     return todo.priority;
+// })
+
+//example 2: using the index:
+
+function myMap(arr, callback){
+    const mappedArray = [];
+    for(let i = 0; i < arr.length; i ++){
+        const val = callback(arr[i],i,arr)
+        mappedArray.push(val);
+    }
+    return mappedArray;
+}
+
+const repeatedStrings = myMap(['a','b','c','d','e'], function(str,idx){
+    return str.repeat(idx);
+})
