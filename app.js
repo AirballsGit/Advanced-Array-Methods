@@ -147,8 +147,8 @@ colors.forEach(function(color, i){
 const numbers = [1,2,3];
 const timesTen = numbers.map(function(value){
     return value * 10;
-});  // numbers = [1,2,3]
-    // timesTen = [10,20,30]
+});  // numbers = [1,2,3] numbers doesnt change
+    // timesTen = [10,20,30] timesTen RETURNS this after the map is ran 
 
 const doubles = numbers.map(function(num){
     console.log(num * 2); // this will print 2,4, 6 to the console
@@ -241,3 +241,75 @@ function myMap(arr, callback){
 const repeatedStrings = myMap(['a','b','c','d','e'], function(str,idx){
     return str.repeat(idx);
 })
+
+
+//**********************/
+// Section 3: // Filter: 
+//**********************/
+
+// easy example 1:
+
+let letters = ['a','b','c','b','c'];
+
+const includesB = letters.filter(function(value,index,array){
+    return value === 'b';
+}) // ['b','b']
+
+//example 2:
+
+const words = [
+    'immunoelectrophoretically',
+    'rotavator',
+    'psychophysicotherapeutics',
+    'squirrelled',
+    'tsktsk',
+    'crypt',
+    'uncopyrightable',
+    'cysts',
+    'pseudopseudohypoparathyroidism',
+    'unimaginatively'
+];
+
+//written with true or false 
+
+const bigWord = words.filter(function(word){
+    if(word.length >= 20){
+        return true;
+    } else {
+        return false;
+    }
+})
+
+//above re-rewritten below:
+// const bigWord = words.filter(function(word){
+//     return word.length >= 20; 
+// })
+
+// example 3: 
+
+const startsWith = words.filter(function(word){
+    return word[0] === 'u' || word[0] === 'c';
+})
+
+//example 4: EXCERCISE
+// filter out the words that dont contain vowels: excercise [a,e,i,o,u]
+// he notes the easiest way to accomplish this is by using a 'regular expression'
+
+
+const containsVowel = function(word){
+    for(let char of word){
+        if(isVowel(char)) return true; 
+    }
+    return false;
+} 
+
+const isVowel = function(char){    // if in console you do 'aeiou'.indexOf('c') >> -1 *character not found*
+    return 'aeiou'.indexOf(char) !== -1; // if in console you do 'aeiou'indexOf('e') >> 1 *character is found*
+} 
+
+
+const containsVowels = words.filter(containsVowel); 
+const noVowels = words.filter(function(word){
+    return !containsVowel(word);
+})
+
