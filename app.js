@@ -443,9 +443,9 @@ btn.addEventListener('click', function(e){
         return checkbox.checked;
     })
     if(!allChecked){
-    alert('PLEASE AGREE TO EVERYTHING')
+    alert('PLEASE AGREE TO ALL THE TERMS OF SERVICE')
     } else {
-        alert ('THANK YOU FOR AGREEING THE TERMS OF SERVICE');
+        alert ('THANK YOU FOR AGREEING TO THE TERMS OF SERVICE');
     }
     
 })
