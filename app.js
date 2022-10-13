@@ -244,7 +244,7 @@ const repeatedStrings = myMap(['a','b','c','d','e'], function(str,idx){
 
 
 //**********************/
-// Section 3: // Filter: 
+// Section 4: // Filter: 
 //**********************/
 
 // easy example 1:
@@ -315,7 +315,7 @@ const noVowels = words.filter(function(word){
 
 
 //**********************/
-// Section 3: // Map & Filter: Combining Map & Filter:
+// Section 5: // Map & Filter: Combining Map & Filter:
 //**********************/
 
 //example 1:
@@ -343,7 +343,7 @@ function extractCompletedTodos(){
 }
 
 //**********************/
-// Section 3: // Writing Filter:
+// Section 6: // Writing Filter:
 //**********************/
 
 function myFilter(arr,callback){
@@ -363,3 +363,121 @@ const shorties = myFilter(words, function(word){ //using previous 'words' array 
 const everyOtherWord = myFilter(words, function(word, i){
     return i % 2 === 0;
 })
+
+
+//**********************/
+// Section 7: // Some & Every: 
+//**********************/
+
+// we dont get an array back we get true or false * 
+
+// Some:
+// iterates through array > runs callback on each value in array > if callback returns true for atleast one single value, it returns true;
+// EVERY: 
+// iterates thru array > runs callback on each value in array>if callback returns false for any single value, it returns false
+
+// easy example 1: SOME
+let numbersSome = [8,9,14];
+
+const someOne = numbersSome.some(function(value, index, array){
+    return value <= 8;
+}) // true 
+
+const someTwo = numbersSome.some(function(value, index, array){
+    return value === 14;
+}) // false 
+
+
+//example 2: SOME.. are SOME of the words in the words array > 25 characters:
+const longWords = words.some(function(word){  // using 'words' array from earlier 
+    return word.length > 25; 
+}) // true
+
+//example 3: SOME .. check if any of the words in the words array contains the word "thyroid". you could use the includes or indexOf (includes not supported by ie)
+const containsThyroid = words.some(function(word){
+    return word.indexOf('thyroid') !== -1;
+}) //true
+
+//every examples:
+// EVERY: 
+// iterates thru array > runs callback on each value in array>if callback returns false for any single value, it returns false
+
+//example 1: EVERY.. check if every words in array is great than 5 characters long
+const atleastFiveChars = words.every(function(w){
+    return w.length >= 5; 
+}) //true
+
+//example 2: write a function call to check if every element in arry is a string
+function allStrings(arr){ // using the words array from earlier 
+    return arr.every(function(el){
+        return typeof el === 'string'
+    })
+} // allstrings(words) >>>> // true   *** allStrings(['a','b','c',5]) >>> // false 
+
+//example 3: Some/EVERY with the dom:**
+// using every in this example on const 'allChecked'
+const btn = document.querySelector('button');
+btn.addEventListener('click', function(e){
+    const checks = document.querySelectorAll('input[name="checkbox1"]');
+    const allChecked = Array.from(checks).every(function(checkbox){
+        return checkbox.checked;
+    })
+    if(!allChecked){
+    alert('PLEASE AGREE TO EVERYTHING')
+    } else {
+        alert ('THANK YOU FOR AGREEING THE TERMS OF SERVICE');
+    }
+    
+})
+
+
+//**********************/
+// Section 8: // WRITING Some / Every:
+//**********************/
+
+// Writing 'SOME' examples:
+
+function mySome(arr,callback){
+    for(let i = 0; i < arr.length; i++){
+        if(callback(arr[i], i, arr)) return true;
+    }
+    return false; 
+}
+
+mySome([4,5,6,7], function (n){
+    return n > 7;
+}) // false (would be true if return n >= 7)
+
+mySome([4,5,6,7], function(n){
+    return n >= 7;
+}) // true 
+
+mySome([4,5,6,7], function (n){
+    return n === 7;
+}) // true 
+
+//----------------//
+// Writing 'Every' Examaples:
+
+function myEvery(arr,callback){
+    for(let i = 0; i < arr.length; i++){
+        if(!callback(arr[i], i, arr)) return false;
+    }
+    return true; 
+}
+
+const greaterThanFive = myEvery([4,5,6,7], function (n){
+    return n > 5;
+}) // false
+
+const greaterThanThree = myEvery([4,5,6,7], function(n){
+    return n > 3;
+}) // true
+
+const isInteger = myEvery([4,5,6,7], function (n){
+    return Number.isInteger(n);
+}) // true 
+
+const isInteger1 = myEvery([4,5,6,7,4.5], function (n){
+    return Number.isInteger(n);
+}) // false
