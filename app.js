@@ -1,3 +1,11 @@
+function holler(){ // function declaration 
+    console.log('HEY YOU!');
+}  // in console holler() >> HEY YOU!
+
+const whisper = function(){ // annoyomous function expression 
+    console.log('Psst I have a secret');
+}// in console whisper() >> Psst I have a secret 
+
 
 //**********************/
 // Section 1: // intro to callbacks: 
@@ -24,71 +32,83 @@ function power (x,y){
 }
 
 const mathFuncs = [add,subtract,multiply,divide, power]; 
+const mathThings = [power,add];
 //need to call as mathFunc[0](5,4) >>> calls add with (5,4);
 
-function doMath(a,b, mathFunc){
+// -------------------------------------------//
+
+function doMath(a,b, mathFunc){ // pass in a single function defined above into what 'mathFunc' is 
     return mathFunc(a,b);
 }
 // accepts 2 parameters a & b and you pass in one of the declared math functions as mathFunc
 
-doMath(3,4, function(a,b){
+doMath(3,4, function(a,b){ //inline annoyomous function 
 console.log(a ** b);
 })
 
-function doAllMath(a,b, mathFuncs){
+function doAllMath(a,b, mathFuncs){  //mathFuncs can be named anything (its not calling the varible mathFuncs here)
     for(let func of mathFuncs){
-        console.log(func(a,b))
+        console.log(func(a,b)) // in console we do doAllMath(2,7,mathFuncs) >> 128, 9 (we pass in mathFuncs into the function)
     }
 }
+
+function doAllMath2(a,b, maths){  //mathFuncs can be named anything (its not calling the varible mathFuncs here)
+    for(let math of maths){
+        console.log(math(a,b)) // in concole we do doAllMath2(2,7,mathThings) >> 128, 9 (we pass in mathFuncs into the function)
+    }
+}
+
+// **UNDERSTAND THAT THE VARIBLE NAME DOESNT MATTER, YOU HAVE TO PASS IT IN YOURSELF)
+// mathFuncs or mathThings gets passed inside of doAllMath & doAllMath2 (2 examples above), the varibles in the function dont matter)
 
 //**********************/
 // Section 2: // For Each: 
 //**********************/
 
 
-// const colors = ['teal', 'cyan', 'peach', 'purple'];
+const colors = ['teal', 'cyan', 'peach', 'purple'];
 
 // example 1:
 
 //inline annoyomous function:
 
-// colors.forEach(function(val){   
-// console.log(val.toUpperCase());
-// });
+colors.forEach(function(val){   
+console.log(val.toUpperCase());
+});
 
 //example 2: create a function and pass it into foreach 
 
-// function yell(val){
-//     console.log(val.toUpperCase())
-// }
+function yell(val){
+    console.log(val.toUpperCase())
+}
 
-// colors.forEach(yell);
+colors.forEach(yell);
 
 // example 3: 
 
-// function yell(val, i){
-//     const caps = val.toUpperCase();
-//     console.log(`At Index ${i} is ${caps}`);
-// }
+function yell(val, i){
+    const caps = val.toUpperCase();
+    console.log(`At Index ${i} is ${caps}`);
+}
 
-// colors.forEach(yell);
+colors.forEach(yell);
 
 // example 4: 
-
-// const prices = [30.99,19.99,2.5,99.0];
-
-// let total = 0; 
-
-// prices.forEach(function(price){
-//     total += price; 
-// }); 
-// console.log(total);
-
-// above can also be written with for of loop: 
 
 const prices = [30.99,19.99,2.5,99.0];
 
 let total = 0; 
+
+prices.forEach(function(price){
+    total += price; 
+}); 
+console.log(total);
+
+// above can also be written with for of loop: 
+
+const prices2 = [30.99,19.99,2.5,99.0];
+
+let total2 = 0; 
 for(let price of prices){
     total += price;
 }
@@ -97,17 +117,17 @@ console.log(total);
 
 // writing your own forEach:
 
-const colors = ['teal', 'cyan', 'peach', 'purple'];
+const colors2 = ['teal', 'cyan', 'peach', 'purple'];
 
-// function forEach(arr,callback){
-//     for(let i = 0; i < arr.length; i ++){
-//         callback(arr[i]);
-//     }
-// }
+function forEach(arr,callback){
+    for(let i = 0; i < arr.length; i ++){
+        callback(arr[i]);
+    }
+}
 
-// forEach(colors,function(color){
-//     console.log(color.toUpperCase());
-// })
+forEach(colors2,function(color){
+    console.log(color.toUpperCase());
+})
 
 
 // same example as above but using the index 
@@ -152,7 +172,7 @@ const timesTen = numbers.map(function(value){
 
 const doubles = numbers.map(function(num){
     console.log(num * 2); // this will print 2,4, 6 to the console
-                            // BUT IF YOU run numbers in the console it will>>
+    return(num * 2);         // this will return an array [2,4,6] // BUT IF YOU run just numbers in the console it will>>
                             // return [undefined, undefined, undefined]
 });
 
@@ -215,17 +235,17 @@ const urls = links2.map(function(link){
 
 //example 1:
 
-// function myMap(arr, callback){
-//     const mappedArray = [];
-//     for(let i = 0; i < arr.length; i ++){
-//         mappedArray.push(callback(arr[i]))
-//     }
-//     return mappedArray;
-// }
+function myMap(arr, callback){
+    const mappedArray = [];
+    for(let i = 0; i < arr.length; i ++){
+        mappedArray.push(callback(arr[i]))
+    }
+    return mappedArray;
+}
 
-// const priorityMap = myMap(toDos, function(todo){
-//     return todo.priority;
-// })
+const priorityMap = myMap(toDos, function(todo){
+    return todo.priority;
+})
 
 //example 2: using the index:
 
@@ -281,9 +301,9 @@ const bigWord = words.filter(function(word){
 })
 
 //above re-rewritten below:
-// const bigWord = words.filter(function(word){
-//     return word.length >= 20; 
-// })
+const bigWord2 = words.filter(function(word){
+    return word.length >= 20; 
+})
 
 // example 3: 
 
@@ -478,6 +498,6 @@ const isInteger = myEvery([4,5,6,7], function (n){
     return Number.isInteger(n);
 }) // true 
 
-const isInteger1 = myEvery([4,5,6,7,4.5], function (n){
+const isInteger1 = myEvery([4,5,6,7,4.5], function (n){ // 4.5 is not an integer
     return Number.isInteger(n);
 }) // false
