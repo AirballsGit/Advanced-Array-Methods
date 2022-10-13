@@ -404,7 +404,7 @@ const someOne = numbersSome.some(function(value, index, array){
 }) // true 
 
 const someTwo = numbersSome.some(function(value, index, array){
-    return value === 14;
+    return value === 15;
 }) // false 
 
 
