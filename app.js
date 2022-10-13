@@ -260,9 +260,9 @@ const includesB = letters.filter(function(value,index,array){
 const words = [
     'immunoelectrophoretically',
     'rotavator',
+    'tsktsk',
     'psychophysicotherapeutics',
     'squirrelled',
-    'tsktsk',
     'crypt',
     'uncopyrightable',
     'cysts',
@@ -313,3 +313,53 @@ const noVowels = words.filter(function(word){
     return !containsVowel(word);
 })
 
+
+//**********************/
+// Section 3: // Map & Filter: Combining Map & Filter:
+//**********************/
+
+//example 1:
+const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+// in console if you do Array.from(allCheckboxes)[0].checked >> this return true. 
+
+const checked = Array.from(allCheckboxes).filter(function(box){
+    return box.checked;
+});
+
+const completedItems = checked.map(function(checkbox){
+    return checkbox.parentElement.innerText;
+});
+
+
+//example 2: putting them all together as if to send out email of complted todos:
+function extractCompletedTodos(){
+    const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+    return Array.from(allCheckboxes).filter(function(box){
+        return box.checked;
+    })
+    .map(function(checkbox){
+        return checkbox.parentElement.innerText;
+    });
+}
+
+//**********************/
+// Section 3: // Writing Filter:
+//**********************/
+
+function myFilter(arr,callback){
+    const filteredArray = [];
+    for(let i = 0; i <arr.length; i++){
+        if(callback(arr[i], i, arr)){
+            filteredArray.push(arr[i])
+        }
+    }
+    return filteredArray;
+}
+
+const shorties = myFilter(words, function(word){ //using previous 'words' array from above
+    return word.length <= 10;
+})
+
+const everyOtherWord = myFilter(words, function(word, i){
+    return i % 2 === 0;
+})
