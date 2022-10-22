@@ -66,7 +66,19 @@ function doAllMath2(a,b, maths){  //mathFuncs can be named anything (its not cal
 //**********************/
 
 
+// For Each you can pass in 3 arguments (val, index, array) ** will hardly ever need to use array as it will return the entire array**
+
 const colors = ['teal', 'cyan', 'peach', 'purple'];
+
+//show everything forEach does 2 examples (first one just passing in console.log, second showing the args in text editor): 
+
+//ex1
+colors.forEach(console.log);
+
+//ex2 
+colors.forEach(function(val, index, arr){
+    console.log(val,index,arr);
+});
 
 // example 1:
 
@@ -86,12 +98,12 @@ colors.forEach(yell);
 
 // example 3: 
 
-function yell(val, i){
+function yell2(val, i){
     const caps = val.toUpperCase();
     console.log(`At Index ${i} is ${caps}`);
 }
 
-colors.forEach(yell);
+colors.forEach(yell2);
 
 // example 4: 
 
@@ -110,22 +122,22 @@ const prices2 = [30.99,19.99,2.5,99.0];
 
 let total2 = 0; 
 for(let price of prices){
-    total += price;
+    total2 += price;
 }
-console.log(total);
+console.log(total2);
 
 
 // writing your own forEach:
 
-const colors2 = ['teal', 'cyan', 'peach', 'purple'];
+const colors2 = ['teal', 'cyan', 'peach', 'purple', 'black'];
 
-function forEach(arr,callback){
+function myForEach(arr,callback){
     for(let i = 0; i < arr.length; i ++){
         callback(arr[i]);
     }
 }
 
-forEach(colors2,function(color){
+myForEach(colors2,function(color){
     console.log(color.toUpperCase());
 })
 
@@ -133,18 +145,18 @@ forEach(colors2,function(color){
 // same example as above but using the index 
 
 //writing for each below but using the index: 
-function forEach(arr,callback){
+function myForEach2(arr,callback){
     for(let i = 0; i < arr.length; i ++){
         callback(arr[i], i);
     }
 }
 
-forEach(colors,function(color, i){
+myForEach2(colors2,function(color, i){
     console.log(color.toUpperCase(), 'at index of:', i);
 })
 
 // using the regular forEach  below outputs same result as above writing our own
-colors.forEach(function(color, i){
+colors2.forEach(function(color, i){
     console.log(color.toUpperCase(), 'at index of:', i);
 })
 
@@ -176,7 +188,17 @@ const doubles = numbers.map(function(num){
                             // return [undefined, undefined, undefined]
 });
 
-//example 2:
+
+// example 2:
+
+const numbers2 = [21,37,64,99,142];
+
+const negatives = numbers2.map(function(num){
+    return num * -1;
+});
+
+
+//example 3:
 const toDos = [
     {
         id: 1,
@@ -210,12 +232,12 @@ const toDoText = toDos.map(function(todo){
 });
 
 
-// example 3: ***** quick way to turn nodelists into arrays to use array methods ****
+// example 4: ***** quick way to turn nodelists into arrays to use array methods ****
 
 const links = document.querySelectorAll('a'); // this will return a nodelist so you cant use all array methods
 // we can turn the nodelist into an array using a helper method Array.from ****
 
-const iter = Array.from(links); // *** using the Array.from Here and saving to varible
+const iter = Array.from(links); // *** using the Array.from Here and saving to varible turns this into an actual array we can use array methods on
 
 const ls = iter.map(function(e){  // ** mapping over that iter array to get links
     return e.href; // ['http://www.google.com/', 'http://www.reddit.com/', 'http://www.yahoo.com/', 'http://www.instagram.com/']
@@ -257,6 +279,8 @@ function myMap(arr, callback){
     }
     return mappedArray;
 }
+
+// in console "lol".repeat(4) === "lollollollol" ** easy example of what repeat does 
 
 const repeatedStrings = myMap(['a','b','c','d','e'], function(str,idx){
     return str.repeat(idx);
@@ -339,7 +363,7 @@ const noVowels = words.filter(function(word){
 //**********************/
 
 //example 1:
-const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+const allCheckboxes = document.querySelectorAll('input[name="checkbox0"]');
 // in console if you do Array.from(allCheckboxes)[0].checked >> this return true. 
 
 const checked = Array.from(allCheckboxes).filter(function(box){
@@ -353,7 +377,7 @@ const completedItems = checked.map(function(checkbox){
 
 //example 2: putting them all together as if to send out email of complted todos:
 function extractCompletedTodos(){
-    const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+    const allCheckboxes = document.querySelectorAll('input[name="checkbox0"]');
     return Array.from(allCheckboxes).filter(function(box){
         return box.checked;
     })
@@ -422,7 +446,7 @@ const containsThyroid = words.some(function(word){
 // EVERY: 
 // iterates thru array > runs callback on each value in array>if callback returns false for any single value, it returns false
 
-//example 1: EVERY.. check if every words in array is great than 5 characters long
+//example 1: EVERY.. check if every words in array is equal to or greater than 5 characters long
 const atleastFiveChars = words.every(function(w){
     return w.length >= 5; 
 }) //true
@@ -501,3 +525,70 @@ const isInteger = myEvery([4,5,6,7], function (n){
 const isInteger1 = myEvery([4,5,6,7,4.5], function (n){ // 4.5 is not an integer
     return Number.isInteger(n);
 }) // false
+
+
+
+//**********************/
+// Section 7: // Find & Find Index: 
+//**********************/
+
+// find = returns the first matching element 
+
+const scores = [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    55,
+    59,
+    69,
+    73,
+    73,
+    75,
+    79,
+    83,
+    88,
+    91,
+    93
+];
+
+const greaterThan75 = scores.find(function(score){
+    return score > 75; 
+}) // 79 ** gives the first match it finds after the function parameters are met... would return 75 if return >= 75; 
+
+const firstEvenScore = scores.find(function(score){
+    return score % 2 === 0; 
+}) // 0 
+
+const firstEvenScoreNotZero = scores.find(function(score){
+    return score !== 0 && score % 2 === 0; 
+}) // 88 
+
+
+// find index: 
+
+const firstEven = scores.findIndex(function(score){
+    return score !== 0 && score % 2 === 0; 
+}) // 16 ... from the above example 88 is the first matching element thats even and not 0 and its at index 16 
+//    if you run scores[16] in console it returns 88 
+
+
+function partition(arr,pivot){  //run partition(scores,0) ....or whatever you want to filter out in place of the 0 
+    const pivotIdx = arr.findIndex(function(el){
+        return el > pivot;
+    });
+    // console.log(pivotIdx);   // if you run in the console partition(scores,0) this will give you 8 ( first el after the 0's end)
+    const left = arr.slice(0,pivotIdx);
+    const right = arr.slice(pivotIdx);
+    return [left, right];
+}
+
+
+//**********************/
+// Section 6: // Writing Find & FindIndx:
+//***********************
+
