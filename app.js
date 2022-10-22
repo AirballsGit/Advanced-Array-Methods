@@ -529,7 +529,7 @@ const isInteger1 = myEvery([4,5,6,7,4.5], function (n){ // 4.5 is not an integer
 
 
 //**********************/
-// Section 7: // Find & Find Index: 
+// Section 9: // Find & Find Index: 
 //**********************/
 
 // find = returns the first matching element 
@@ -576,6 +576,9 @@ const firstEven = scores.findIndex(function(score){
 }) // 16 ... from the above example 88 is the first matching element thats even and not 0 and its at index 16 
 //    if you run scores[16] in console it returns 88 
 
+scores.findIndex(function(score){
+    return score > 100;
+}) // this return -1 if its not found ** 
 
 function partition(arr,pivot){  //run partition(scores,0) ....or whatever you want to filter out in place of the 0 
     const pivotIdx = arr.findIndex(function(el){
@@ -592,3 +595,126 @@ function partition(arr,pivot){  //run partition(scores,0) ....or whatever you wa
 // Section 6: // Writing Find & FindIndx:
 //***********************
 
+// writing myFind: 
+
+function myFind (arr,callback){
+    for(let i = 0; i < arr.length; i ++){
+        if(callback(arr[i], i, arr) === true) return arr[i];
+    }
+}
+
+
+myFind(scores, function(score){
+    return score > 90; 
+}) // 91 
+
+//writing myFindIndex: 
+
+function myFindIndex (arr,callback){
+    for(let i = 0; i < arr.length; i ++){
+        if(callback(arr[i], i, arr) === true) return i;
+    }
+    return -1; 
+}
+
+
+myFindIndex(scores, function(score){
+    return score !== 0 && score % 2 === 0; 
+}) // 16 the index where 88 is found in the scores array.. 88 is the first even number thats not 0 
+
+
+//**********************/
+// Section 10: // Reduce: 
+//**********************/
+
+const nums = [20,30,50,12,-2,45,99,19,22,85];
+
+let totalOfNums = 0;   // getting the total of nums 
+for(let num of nums){
+    totalOfNums += num
+}
+console.log(totalOfNums); //380 
+
+let min = 0;  // getting the min of nums 
+for (let i = 1; i < nums.length; i ++){
+    if(nums[i] < min) min = nums[i]; 
+}
+
+console.log(min); // -2 
+
+
+const str = "lollapalooza"; 
+const charFreq = {};
+for(let char of str){
+    if(charFreq[char]){
+        charFreq[char] += 1; 
+    }
+    else {
+        charFreq[char] = 1;
+    }
+}
+
+//**********************/
+// Section 10: // Using Reduce: 
+//**********************/
+
+// Easy Example: 
+
+let evens = [2,4,6,8,10];
+
+evens.reduce(function(accumulator, nextValue){
+    return accumulator + nextValue; 
+}); // 30 .... / 2 > 6 > 12 > 20 > 30
+
+// example 2: 
+
+const wordReduce = ['hello', 'i', 'love', 'you']; 
+const result = wordReduce.reduce(function(accum, nextWord){
+    console.log(accum, nextWord); // hello i // undefined 'love' undefined 'you' // if you add return under you get hello i, helloi love, helloilove you
+    return accum + nextWord;
+}) // if you run result in console you get 'helloiloveyou' 
+
+
+// example 3: 
+const midtermScores = [70,88,93,94,64,62,56];
+const finalScores = [92,93,76,77,78,59,61]; 
+
+const minMidtermScore = midtermScores.reduce(function(min, nextScore){
+    if(nextScore < min){
+         return nextScore;
+    }
+    return min;
+});
+
+// example 3.1:
+// same example as above but writing using the ternary operator: 
+const minMidtermScore2 = midtermScores.reduce(function(min, nextScore){
+    return nextScore < min ? nextScore : min; 
+});
+
+//example 3.2
+// same example but getting the max score of midtermScores:
+const maxScore = midtermScores.reduce(function(max, nextScore){
+    return nextScore > max ? nextScore : max; 
+});
+
+//example 4: 
+// ADDING A SECOND PARAMETER: 
+
+// ** using the evens example but adding the second argument instead of just the callback:
+
+evens.reduce(function(accum, nextValue){
+    return accum + nextValue;
+},10); // 40 ...... // 12,16,22,30,40 because were starting at a value of 10 and start by adding 2, then adding 4 and so on 10 > 2 > 12 > 16 
+// the 10 as the second argument initilizes the accumator at 10 
+
+//example 4.1 getting the min final score of finalScores
+const minFinalScore = finalScores.reduce(function(min, nextScore){
+    return nextScore < min ? nextScore : min; 
+}) // 59 
+
+//example 4.2 passing in the second argument and combining 
+const minOverallScore = finalScores.reduce(function(min,nextScore){ 
+    return nextScore < min ? nextScore : min;
+},minMidtermScore2); // 56 
+// in this example the arugment "min" starts as minMidtermScore2's value of 56 
